@@ -1,5 +1,6 @@
 import React from "react";
 import BookSearch from "./Book Components/BookSearch";
+//@mui/styles is used as a styling solution from Material-UI
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -9,8 +10,8 @@ const useStyles = makeStyles({
     textAlign: "center",
     fontFamily: "Times New Roman, Times, serif",
     backgroundColor: "#008080",
-    padding: "10px",
-  },
+    padding: "10px"
+  }
 });
 
 function App() {
@@ -18,7 +19,10 @@ function App() {
 
   return (
     <div>
+      {/* Application  Header*/}
       <div className={classes.header}>Book Finder</div>
+      {/* Rendering Book search component with Search Bar
+       and List of books */}
       <BookSearch />
     </div>
   );

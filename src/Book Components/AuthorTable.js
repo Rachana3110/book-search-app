@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 
+// styles of AuthorTable Component
 const useStyles = makeStyles({
+  load: {
+    padding: "40px"
+  },
   table: {
     border: "1px solid black",
     borderCollapse: "collapse",
     height: "130px",
-    width: "100px",
+    width: "100px"
   },
   column: {
     border: "1px solid black",
     backgroundColor: "#2F4F4F",
     color: "white",
-    textAlign: "center",
+    textAlign: "center"
   },
   row: {
     textAlign: "left",
-    border: "1px solid black",
-  },
+    border: "1px solid black"
+  }
 });
 
 const AuthorTable = (name) => {
@@ -27,6 +31,8 @@ const AuthorTable = (name) => {
   const [error, setError] = useState(null);
   const author = Object.values(name)[0];
 
+  // Initialised to fetch data of author by passing author name
+  // to the public url
   const displayData = (authName) => {
     setLoading(true);
     fetch("https://openlibrary.org/search/authors.json?q=" + authName)
@@ -37,25 +43,32 @@ const AuthorTable = (name) => {
   };
 
   useEffect(() => {
+    //displayData is called to get author details
     displayData(author);
   }, [author]);
 
+  //Loading untill author detials is fetched
   if (loading) {
-    return <></>;
+    return (
+      <div className={classes.load}>Loading Author Details! Plase wait..</div>
+    );
   }
-
+  // Incase of any error while fetching author data
   if (error) {
     return <h3>{JSON.stringify(error, null, 2)}</h3>;
   }
 
+  //returns null if fetched data is empty
   if (!authorData.docs) {
     return null;
   }
 
   return (
     <>
-      {authorData !== "" && (
+      {/* Displayes author table only if author data is fetched */}
+      {authorData !== "" ? (
         <div className={classes.main}>
+          {/* Table to display author details*/}
           <table className={classes.table}>
             <tr>
               <th className={classes.column}> Author Name</th>
@@ -75,6 +88,8 @@ const AuthorTable = (name) => {
             </tr>
           </table>
         </div>
+      ) : (
+        <div> No Author details found!</div>
       )}
     </>
   );
