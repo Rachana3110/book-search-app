@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   }
 });
 
-const BookTable = ({ data }) => {
+const BookTable = ({ bookData }) => {
   const classes = useStyles();
   const [authorDetails, setAuthorDetails] = useState();
   const [display, setDisplay] = useState(false);
@@ -69,42 +69,44 @@ const BookTable = ({ data }) => {
                 <th className={classes.column}> Published Languages</th>
                 <th className={classes.column}> Published Places</th>
               </tr>
-              {data.map((val, key) => {
+              {bookData.map((book, key) => {
                 return (
                   <>
                     <tr key={key}>
                       {/* Rows with Book Details for Book Table*/}
-                      <td className={classes.row}>{val.title}</td>
+                      <td className={classes.row}>{book.title}</td>
                       <td className={classes.row}>
                         {/*Button is given for auther name and togglerDrawer is called 
                         so that if clicked on auther name side drawer should show up 
                         with author Details*/}
-                        {val.author_name !== undefined &&
-                          val.author_name !== null && (
+                        {book.author_name !== undefined &&
+                          book.author_name !== null && (
                             <button
                               className={classes.button}
                               onClick={toggleDrawer(
-                                val.author_name[0],
+                                book.author_name[0],
                                 anchor,
                                 true
                               )}
                             >
-                              {val.author_name[0]}
+                              {book.author_name[0]}
                             </button>
                           )}
                       </td>
                       <td className={classes.row}>
-                        {val.first_publish_year !== undefined &&
-                          val.first_publish_year !== null &&
-                          val.first_publish_year}
+                        {book.first_publish_year !== undefined &&
+                          book.first_publish_year !== null &&
+                          book.first_publish_year}
                       </td>
                       <td className={classes.row}>
-                        {val.language !== null && val.language !== undefined
-                          ? val.language.join(", ")
-                          : val.language}
+                        {book.language !== null && book.language !== undefined
+                          ? book.language.join(", ")
+                          : book.language}
                       </td>
                       <td className={classes.row}>
-                        {val.place != null ? val.place.join(", ") : val.place}
+                        {book.place != null
+                          ? book.place.join(", ")
+                          : book.place}
                       </td>
                     </tr>
                   </>
@@ -117,7 +119,7 @@ const BookTable = ({ data }) => {
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(
-              data.map(
+              bookData.map(
                 (book) => book.author_name !== undefined && book.author_name[0]
               ),
               anchor,

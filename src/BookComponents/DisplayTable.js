@@ -94,7 +94,7 @@ function DisplayTable({ search }) {
         <div className={classes.maintable}>
           {/* If search data has some value then filtered data is displayed according to 
           the searched word*/}
-          <BookTable data={currentBooks} />
+          <BookTable bookData={currentBooks} />
           <div className={classes.pagination}>
             {/* rendering pagination for the table using Pagination Component */}
             <Pagination
