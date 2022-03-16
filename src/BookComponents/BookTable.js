@@ -25,9 +25,6 @@ const useStyles = makeStyles({
     textAlign: "left",
     border: "1px solid black"
   },
-  SideBar: {
-    display: "flex"
-  },
   button: {
     display: "flex",
     color: "blue",
@@ -36,6 +33,9 @@ const useStyles = makeStyles({
     background: "none",
     textAlign: "left",
     fontSize: "15px"
+  },
+  drawer: {
+    backgroundColor: "transparent"
   }
 });
 
@@ -79,20 +79,27 @@ const BookTable = ({ data }) => {
                         {/*Button is given for auther name and togglerDrawer is called 
                         so that if clicked on auther name side drawer should show up 
                         with author Details*/}
-                        <button
-                          className={classes.button}
-                          onClick={toggleDrawer(
-                            val.author_name[0],
-                            anchor,
-                            true
+                        {val.author_name !== undefined &&
+                          val.author_name !== null && (
+                            <button
+                              className={classes.button}
+                              onClick={toggleDrawer(
+                                val.author_name[0],
+                                anchor,
+                                true
+                              )}
+                            >
+                              {val.author_name[0]}
+                            </button>
                           )}
-                        >
-                          {val.author_name[0]}
-                        </button>
                       </td>
-                      <td className={classes.row}>{val.first_publish_year}</td>
                       <td className={classes.row}>
-                        {val.language != null
+                        {val.first_publish_year !== undefined &&
+                          val.first_publish_year !== null &&
+                          val.first_publish_year}
+                      </td>
+                      <td className={classes.row}>
+                        {val.language !== null && val.language !== undefined
                           ? val.language.join(", ")
                           : val.language}
                       </td>
@@ -110,10 +117,13 @@ const BookTable = ({ data }) => {
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(
-              data.map((book) => book.author_name[0]),
+              data.map(
+                (book) => book.author_name !== undefined && book.author_name[0]
+              ),
               anchor,
               false
             )}
+            className={classes.drawer}
           >
             {/* Author Table is rendered in the side Drawer*/}
             <>{authorDetails && <AuthorTable value={authorDetails} />}</>

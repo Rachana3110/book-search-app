@@ -1,5 +1,5 @@
 import React from "react";
-import BookSearch from "./Book Components/BookSearch";
+import BookSearch from "./BookComponents/BookSearch";
 //@mui/styles is used as a styling solution from Material-UI
 import { makeStyles } from "@mui/styles";
 
