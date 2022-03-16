@@ -5,12 +5,12 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
   header: {
-    fontSize: "40px",
+    fontSize: "45px",
     color: "white",
     textAlign: "center",
-    fontFamily: "Times New Roman, Times, serif",
-    backgroundColor: "#008080",
-    padding: "10px"
+    fontFamily: "Times New Roman",
+    backgroundColor: "#2F4F4F",
+    paddingTop: "10px"
   }
 });
 

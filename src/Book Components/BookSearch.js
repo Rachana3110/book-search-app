@@ -3,21 +3,25 @@ import { makeStyles } from "@mui/styles";
 import SearchBar from "./SearchBar";
 import BookTable from "./BookTable";
 import Pagination from "./Pagination";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
+import axios from "axios";
 
 //styles for BookSearch Component
 const useStyles = makeStyles({
   load: {
     display: "flex",
-    flexDirection: "column",
-    paddingTop: "150px",
-    alignItems: "center"
+    justifyContent: "center",
+    color: "black",
+    fontSize: "15px",
+    fontWeight: "bold",
+    backgroundColor: "white"
   },
   noResult: {
-    textAlign: "center",
-    padding: "50px",
-    color: "black",
-    fontSize: "20px"
+    display: "flex",
+    justifyContent: "center",
+    color: "#12ffe9",
+    fontSize: "20px",
+    fontWeight: "bold"
   },
   maintable: {
     display: "flex",
@@ -27,7 +31,7 @@ const useStyles = makeStyles({
   },
   pagination: {
     display: "flex",
-    backgroundColor: "#2F4F4F",
+    backgroundColor: "transparent",
     justifyContent: "center",
     padding: "10px"
   }
@@ -40,33 +44,28 @@ function BookSearch() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(10);
-  const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  const fetch = async () => {
+    await axios("https://openlibrary.org/search.json?title=a")
+      .then((response) => {
+        console.log(response.data);
+        const bookData = response.data;
+        setData(bookData);
+        setLoading(false);
+      })
+      .catch((error) => console.log("Error" + error));
+  };
+
   useEffect(() => {
     setLoading(true);
-    //fetching Books data from public API
-    fetch("https://openlibrary.org/search.json?title=a")
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .then(() => setLoading(false))
-      .catch(setError);
+    fetch();
   }, []);
 
   //loader screen is shown untill the data is fetched
   if (loading) {
-    return (
-      <Box className={classes.load}>
-        <CircularProgress size={"100px"} color="inherit" />
-        <h4>Loading...Please wait!</h4>
-      </Box>
-    );
-  }
-
-  //Error is being handled incase any error occurs while fetching data
-  if (error) {
-    return <h3>{JSON.stringify(error, null, 2)}</h3>;
+    return <div className={classes.load}>Loading...Please wait!</div>;
   }
 
   //If Book data is empty then return null
@@ -98,12 +97,12 @@ function BookSearch() {
     return setCurrentPage(number);
   };
 
-  //Variable to store index of last book for a current book table
+  //Variable to store index of last and first book of a current book table
+  // and filter searched data to display only 10 records per page
   const indexofLastBook = currentPage * booksPerPage;
-  //Variable to store index of first book for a current book table
   const indexofFirstBook = indexofLastBook - booksPerPage;
-  //Filter Book data to display 10 records per page
   const currentBooks = mainData.slice(indexofFirstBook, indexofLastBook);
+  const SearchBooks = searchResults.slice(indexofFirstBook, indexofLastBook);
 
   return (
     <>
@@ -111,33 +110,27 @@ function BookSearch() {
         {/* Search Bar to search for books using Book Title */}
         <SearchBar term={search} searchKeyword={searchHandler} />
       </div>
-      {search.length < 1 ? (
+      {search.length >= 1 && searchResults.length !== 0 && (
         <div className={classes.maintable}>
-          <div>
-            {/* If searched data is empty then all the Books are displayed in a table with book Details*/}
-            <BookTable data={currentBooks} />
-          </div>
+          {/* If search data has some value then filtered data is displayed according to 
+          the searched word*/}
+          <BookTable data={SearchBooks} />
           <div className={classes.pagination}>
-            {/* rendering pagination for the table using Pagination Component*/}
+            {/* rendering pagination for the table using Pagination Component */}
             <Pagination
               booksPerPage={booksPerPage}
-              totalBooks={mainData.length}
+              totalBooks={searchResults.length}
               paginate={paginate}
               currentPage={currentPage}
             />
           </div>
         </div>
-      ) : searchResults.length !== 0 ? (
-        <div className={classes.maintable}>
-          {/* If search data has some value then filtered data is displayed according to 
-          the searched word*/}
-          <BookTable data={searchResults} />
-        </div>
-      ) : (
-        <div className={classes.noResult}>
+      )}
+      {search.length >= 1 && SearchBooks.length == 0 && (
+        <h4 className={classes.noResult}>
           {/* If the searched data return no Book data then below message is displayed*/}
           No Book Details found for the Search!
-        </div>
+        </h4>
       )}
     </>
   );

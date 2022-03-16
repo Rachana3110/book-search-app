@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
   column: {
     border: "1px solid white",
-    backgroundColor: "#2F4F4F",
+    backgroundColor: "#008080",
     color: "white",
     textAlign: "center"
   },

@@ -43,7 +43,7 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
               className={
                 currentPage !== number ? classes.button : classes.clickedButton
               }
-              onClick={() => paginate(number)}
+              onClick={totalBooks > 10 ? () => paginate(number) : paginate(1)}
             >
               {number}
             </button>

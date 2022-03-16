@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
+import axios from "axios";
 
 // styles of AuthorTable Component
 const useStyles = makeStyles({
@@ -28,21 +29,23 @@ const AuthorTable = (name) => {
   const classes = useStyles();
   const [authorData, setAuthorData] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const author = Object.values(name)[0];
 
   // Initialised to fetch data of author by passing author name
   // to the public url
-  const displayData = (authName) => {
-    setLoading(true);
-    fetch("https://openlibrary.org/search/authors.json?q=" + authName)
-      .then((response) => response.json())
-      .then((authorData) => setAuthorData(authorData))
-      .then(() => setLoading(false))
-      .catch(setError);
+  const displayData = async (authName) => {
+    await axios("https://openlibrary.org/search/authors.json?q=" + authName)
+      .then((response) => {
+        console.log(response.data);
+        const authorDetails = response.data;
+        setAuthorData(authorDetails);
+        setLoading(false);
+      })
+      .catch((error) => console.log("Error" + error));
   };
 
   useEffect(() => {
+    setLoading(true);
     //displayData is called to get author details
     displayData(author);
   }, [author]);
@@ -52,10 +55,6 @@ const AuthorTable = (name) => {
     return (
       <div className={classes.load}>Loading Author Details! Plase wait..</div>
     );
-  }
-  // Incase of any error while fetching author data
-  if (error) {
-    return <h3>{JSON.stringify(error, null, 2)}</h3>;
   }
 
   //returns null if fetched data is empty
