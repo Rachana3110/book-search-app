@@ -19,21 +19,23 @@ const useStyles = makeStyles({
 
 // functional component which takes initial text
 // and text entered on search bar
-function Search({ term, searchKeyword }) {
+function Search({ searchKeyword }) {
   const classes = useStyles();
-  //function to get text entered inside input bar
-  function handleSearch(e) {
-    searchKeyword(e.target.value);
+
+  //function to get text entered inside input bar after enter is pressed
+  function handleSubmit(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchKeyword(e.target.value);
+    }
   }
 
   return (
     <div className={classes.search}>
       <input
         className={classes.input}
-        type="text"
-        value={term}
-        placeholder="Search Books Using Book Name..."
-        onChange={handleSearch}
+        placeholder="Search books using book name and press enter..."
+        onKeyPress={handleSubmit}
       ></input>
     </div>
   );

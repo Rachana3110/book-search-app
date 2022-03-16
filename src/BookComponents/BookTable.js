@@ -32,7 +32,8 @@ const useStyles = makeStyles({
     border: "none",
     background: "none",
     textAlign: "left",
-    fontSize: "15px"
+    fontSize: "15px",
+    textDecoration: "underline"
   },
   drawer: {
     backgroundColor: "transparent"
@@ -57,7 +58,7 @@ const BookTable = ({ bookData }) => {
   return (
     <div className={classes.root}>
       {["right"].map((anchor) => (
-        <React.Fragment key={anchor}>
+        <>
           <div className={classes.main}>
             {/* Table is created to display Book Details*/}
             <table className={classes.table}>
@@ -130,7 +131,7 @@ const BookTable = ({ bookData }) => {
             {/* Author Table is rendered in the side Drawer*/}
             <>{authorDetails && <AuthorTable value={authorDetails} />}</>
           </Drawer>
-        </React.Fragment>
+        </>
       ))}
     </div>
   );
