@@ -77,8 +77,8 @@ const BookTable = ({ bookData }) => {
                       {/* Rows with Book Details for Book Table*/}
                       <td className={classes.row}>{book.title}</td>
                       <td className={classes.row}>
-                        {/*Button is given for auther name and togglerDrawer is called 
-                        so that if clicked on auther name side drawer should show up 
+                        {/* togglerDrawer is called so that if clicked 
+                        on author name button side drawer should show up 
                         with author Details*/}
                         {book.author_name !== undefined &&
                           book.author_name !== null && (
@@ -115,7 +115,8 @@ const BookTable = ({ bookData }) => {
               })}
             </table>
           </div>
-          {/* Temporary navigation drawers from Material-UI is used to toggle between open or close of sidebar*/}
+          {/* Temporary navigation drawers from Material-UI is used to 
+          toggle between open or close of sidebar*/}
           <Drawer
             anchor={anchor}
             open={state[anchor]}

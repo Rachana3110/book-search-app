@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import SearchBar from "./SearchBar";
 import BookTable from "./BookTable";
 import Pagination from "./Pagination";
 import axios from "axios";
@@ -55,6 +54,7 @@ function DisplayTable({ search }) {
       .catch((error) => console.log("Error" + error));
   };
 
+  //fetch function is called to retrieve data according to the search
   useEffect(() => {
     if (search !== "") {
       setLoading(true);

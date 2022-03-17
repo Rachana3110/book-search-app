@@ -22,7 +22,7 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
   const classes = useStyles();
   const [pageNumbers, setPageNumbers] = useState([]);
 
-  // Itterates through the page numbers based on total book and
+  // Iterates through the page numbers based on total book and
   // books data needed for each page and set the data to pageNumbers variable
   useEffect(() => {
     const arr = [];
@@ -34,11 +34,11 @@ const Pagination = ({ booksPerPage, totalBooks, paginate, currentPage }) => {
 
   return (
     <div className={classes.main}>
-      {/* Buttons numbers are rendered and highlighting of current 
-      page button is also handeled here*/}
+      {/* Button numbers are rendered*/}
       {pageNumbers &&
         pageNumbers.map((number) => {
           return (
+            // current page button is highlightened on click
             <button
               className={
                 currentPage !== number ? classes.button : classes.clickedButton

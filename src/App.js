@@ -3,6 +3,7 @@ import BookSearch from "./BookComponents/BookSearch";
 //@mui/styles is used as a styling solution from Material-UI
 import { makeStyles } from "@mui/styles";
 
+//styles for App component
 const useStyles = makeStyles({
   header: {
     fontSize: "45px",

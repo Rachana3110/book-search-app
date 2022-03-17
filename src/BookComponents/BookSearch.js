@@ -11,8 +11,7 @@ function BookSearch() {
   //React hook is used to initialize current state and changed state value
   const [submit, setSubmit] = useState("");
 
-  //function to handle filtering of searched Book title in search bar
-
+  //function to submit searched text and fetch data based on search
   const submitHandler = (searchData) => {
     setSubmit(searchData);
   };

@@ -17,8 +17,8 @@ const useStyles = makeStyles({
   }
 });
 
-// functional component which takes initial text
-// and text entered on search bar
+// functional component which takes text entered on search bar
+// and capture search data only after pressing enter
 function Search({ searchKeyword }) {
   const classes = useStyles();
 
