@@ -9,7 +9,6 @@ const useStyles = makeStyles({
     fontWeight: "bold"
   },
   root: {
-    // height: "130px",
     width: "250px"
   },
   main: {
@@ -26,7 +25,6 @@ const useStyles = makeStyles({
     paddingLeft: "10px"
   },
   itemLeft: {
-    //borderBlockEnd: "1px solid black",
     disply: "flex",
     fontSize: "15px",
     fontWeight: "bold",
@@ -34,7 +32,6 @@ const useStyles = makeStyles({
     paddingBottom: "10px"
   },
   itemRight: {
-    //border: "1px solid black",
     disply: "flex",
     fontSize: "15px",
     justifyContent: "left",
@@ -74,7 +71,7 @@ const AuthorTable = (name) => {
     );
   }
 
-  //returns null if fetched data is empty
+  //returns null if fetched author data is empty
   if (!authorData.docs) {
     return null;
   }
@@ -89,22 +86,41 @@ const AuthorTable = (name) => {
           <div className={classes.container}>
             <div className={classes.itemLeft}>Author Name:</div>
             <div className={classes.itemRight}>{authorData.docs[0].name}</div>
-            <div className={classes.itemLeft}>Birth Date:</div>
-            <div className={classes.itemRight}>
-              {authorData.docs[0].birth_date}
-            </div>
-            <div className={classes.itemLeft}>Death Date:</div>
-            <div className={classes.itemRight}>
-              {authorData.docs[0].death_date}
-            </div>
-            <div className={classes.itemLeft}>Best Book:</div>
-            <div className={classes.itemRight}>
-              {authorData.docs[0].top_work}
-            </div>
-            <div className={classes.itemLeft}>Subjects of Writing:</div>
-            <div className={classes.itemRight}>
-              {authorData.docs[0].top_subjects.join(", ")}
-            </div>
+            {authorData.docs[0].birth_date !== undefined && (
+              <>
+                <div className={classes.itemLeft}>Birth Date:</div>
+                <div className={classes.itemRight}>
+                  {authorData.docs[0].birth_date}
+                </div>
+              </>
+            )}
+
+            {authorData.docs[0].death_date !== undefined && (
+              <>
+                <div className={classes.itemLeft}>Death Date:</div>
+                <div className={classes.itemRight}>
+                  {authorData.docs[0].death_date}
+                </div>
+              </>
+            )}
+
+            {authorData.docs[0].top_work !== undefined && (
+              <>
+                <div className={classes.itemLeft}>Best Book:</div>
+                <div className={classes.itemRight}>
+                  {authorData.docs[0].top_work}
+                </div>
+              </>
+            )}
+
+            {authorData.docs[0].top_subjects !== undefined && (
+              <>
+                <div className={classes.itemLeft}>Subjects of Writing:</div>
+                <div className={classes.itemRight}>
+                  {authorData.docs[0].top_subjects.join(", ")}
+                </div>
+              </>
+            )}
           </div>
         </div>
       ) : (
